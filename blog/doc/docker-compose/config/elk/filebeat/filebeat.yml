@@ -1,0 +1,103 @@
+# ============================== Filebeat inputs ===============================
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - ../../../log/web/*.log
+    fields:
+      docType: web-log
+      project: web
+      from: web
+    fields_under_root: true
+  - type: log
+    enabled: true
+    paths:
+      - ../../../log/admin/*.log
+    fields:
+      docType: admin-log
+      project: admin
+      from: admin
+    fields_under_root: true
+  - type: log
+    enabled: true
+    paths:
+      - ../../../log/sms/*.log
+    fields:
+      docType: sms-log
+      project: sms
+      from: sms
+    fields_under_root: true
+  - type: log
+    enabled: true
+    paths:
+      - ../../../log/picture/*.log
+    fields:
+      docType: picture-log
+      project: picture
+      from: picture
+    fields_under_root: true
+  - type: log
+    enabled: true
+    paths:
+      - ../../../log/gateway/*.log
+    fields:
+      docType: gateway-log
+      project: gateway
+      from: gateway
+    fields_under_root: true
+  - type: log
+    enabled: true
+    paths:
+      - ../../../log/monitor/*.log
+    fields:
+      docType: monitor-log
+      project: monitor
+      from: monitor
+    fields_under_root: true
+
+
+# ============================== Filebeat modules ==============================
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+# ======================= Elasticsearch template setting =======================
+
+setup.template.settings:
+  index.number_of_shards: 1
+  #index.codec: best_compression
+  #_source.enabled: false
+
+# =================================== Kibana ===================================
+
+# Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
+# This requires a Kibana endpoint configuration.
+setup.kibana:
+
+# ---------------------------- Elasticsearch Output ----------------------------
+# output.elasticsearch:
+# Array of hosts to connect to.
+# hosts: ["192.168.163.128:9200"]
+# bulk_max_size: 2048
+
+# ------------------------------ Logstash Output -------------------------------
+output.logstash:
+  # The Logstash hosts
+  hosts: ["elk:5044"]
+  bulk_max_size: 2048
+
+# ================================= Processors =================================
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~

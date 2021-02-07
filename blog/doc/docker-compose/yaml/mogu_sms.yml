@@ -1,0 +1,19 @@
+version: '3'
+services:
+  #授权服务
+  sms:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/sms:latest
+    container_name: sms
+    restart: always
+    ports:
+      - 8604:8604
+    networks:
+      - blog
+    environment:
+      - COMPOSE_PROJECT_NAME=sms
+    volumes:
+      - ../log/:/logs/
+      - ../config/sms/:/config/
+networks:
+  blog:
+    external: true

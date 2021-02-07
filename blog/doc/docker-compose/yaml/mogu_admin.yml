@@ -1,0 +1,19 @@
+version: '3'
+services:
+  #授权服务
+  admin:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/admin:latest
+    container_name: admin
+    restart: always
+    ports:
+      - 8601:8601
+    networks:
+      - blog
+    environment:
+      - COMPOSE_PROJECT_NAME=admin
+    volumes:
+      - ../log/:/logs/
+      - ../config/admin/:/config/
+networks:
+  blog:
+    external: true

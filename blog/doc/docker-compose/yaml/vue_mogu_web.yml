@@ -1,0 +1,18 @@
+version: '3'
+services:
+  #授权服务
+  vue_web:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/vue_web:latest
+    container_name: vue_web
+    restart: always
+    ports:
+      - 9527:80
+    networks:
+      - blog
+    env_file:
+      - ../config/vue_web.env
+    environment:
+      - COMPOSE_PROJECT_NAME=vue_web
+networks:
+  blog:
+    external: true

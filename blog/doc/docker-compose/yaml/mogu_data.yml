@@ -1,0 +1,18 @@
+version: '3'
+services:
+  #授权服务
+  data:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/nginx
+    container_name: data
+    restart: always
+    ports:
+      - 80:80
+      - 8600:8600
+    networks:
+      - blog
+    volumes:
+      - ../data/data/:/home/blog/data/
+      - ../config/data.conf:/etc/nginx/conf.d/default.conf
+networks:
+  blog:
+    external: true

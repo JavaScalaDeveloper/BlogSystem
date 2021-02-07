@@ -1,0 +1,18 @@
+version: '3'
+services:
+  #授权服务
+  spider:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/spider:latest
+    container_name: spider
+    restart: always
+    ports:
+      - 8608:8608
+    networks:
+      - blog
+    environment:
+      - COMPOSE_PROJECT_NAME=spider
+    volumes:
+      - ../log/:/logs/
+networks:
+  blog:
+    external: true

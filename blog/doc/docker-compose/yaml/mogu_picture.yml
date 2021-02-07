@@ -1,0 +1,20 @@
+version: '3'
+services:
+  #授权服务
+  picture:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/picture:latest
+    container_name: picture
+    restart: always
+    ports:
+      - 8602:8602
+    networks:
+      - blog
+    environment:
+      - COMPOSE_PROJECT_NAME=picture
+    volumes:
+      - ../log/:/logs/
+      - ../config/picture/:/config/
+      - ../data/data/:/home/blog/data/
+networks:
+  blog:
+    external: true

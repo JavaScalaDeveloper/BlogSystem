@@ -1,0 +1,19 @@
+version: '3'
+services:
+  #授权服务
+  web:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/web:latest
+    container_name: web
+    restart: always
+    ports:
+      - 8603:8603
+    networks:
+      - blog
+    environment:
+      - COMPOSE_PROJECT_NAME=web
+    volumes:
+      - ../log/:/logs/
+      - ../config/web/:/config/
+networks:
+  blog:
+    external: true

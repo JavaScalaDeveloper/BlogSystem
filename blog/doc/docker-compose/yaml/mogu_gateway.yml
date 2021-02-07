@@ -1,0 +1,19 @@
+version: '3'
+services:
+  #授权服务
+  gateway:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/gateway:latest
+    container_name: gateway
+    restart: always
+    ports:
+      - 8607:8607
+    networks:
+      - blog
+    environment:
+      - COMPOSE_PROJECT_NAME=gateway
+    volumes:
+    - ../log/:/logs/
+    - ../config/gateway/:/config/
+networks:
+  blog:
+    external: true

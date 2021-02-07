@@ -1,0 +1,19 @@
+version: '3'
+services:
+  #授权服务
+  vue_admin:
+    image: registry.cn-shenzhen.aliyuncs.com/blog/vue_admin:latest
+    container_name: vue_admin
+    restart: always
+    ports:
+      - 9528:80
+    networks:
+      - blog
+    env_file:
+      - ../config/vue_admin.env
+    environment:
+      - COMPOSE_PROJECT_NAME=vue_admin
+
+networks:
+  blog:
+    external: true
